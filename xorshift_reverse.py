@@ -1,6 +1,7 @@
 def uint(value: int):
     return value & 0xFFFFFFFF
 
+
 def reverse_xor_left_shift(value: int, shift: int):
     i = 0
 
@@ -11,6 +12,7 @@ def reverse_xor_left_shift(value: int, shift: int):
         i += 1
 
     return value
+
 
 def reverse_xor_right_shift(value: int, shift: int):
     i = 0
@@ -24,6 +26,7 @@ def reverse_xor_right_shift(value: int, shift: int):
         i += 1
 
     return result
+
 
 def reverse(state):
     t = state[3]

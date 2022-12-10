@@ -1,5 +1,6 @@
 import struct
 
+
 class PK8:
     def __init__(self, data: bytes):
         self.data = data

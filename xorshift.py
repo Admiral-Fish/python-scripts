@@ -17,6 +17,7 @@ class Xorshift:
 
         return ((t % 0xffffffff) + 0x80000000) & 0xffffffff
 
+
 if __name__ == "__main__":
     rng = Xorshift(0x52e76d830ba18b83, 0xa587b502ad523f9d)
 

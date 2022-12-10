@@ -1,12 +1,17 @@
 from lcrng import PokeRNG
 
-characters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "!", "?" ]
-natures = [ "Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold", "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty", "Serious", "Jolly", "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle", "Sassy", "Careful", "Quirky" ]
-hiddenPowers = [ "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Steel", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice", "Dragon", "Dark" ]
+characters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+              "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "!", "?"]
+natures = ["Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold", "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty",
+           "Serious", "Jolly", "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle", "Sassy", "Careful", "Quirky"]
+hiddenPowers = ["Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost",
+                "Steel", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice", "Dragon", "Dark"]
+
 
 def getLetter(pid: int):
     letter = (((pid & 0x3000000) >> 18) | ((pid & 0x30000) >> 12) | ((pid & 0x300) >> 6) | (pid & 0x3)) % 28
     return characters[letter]
+
 
 def getTargetLetter(location: int, slot: int):
     if location == 0:
@@ -29,7 +34,7 @@ def getTargetLetter(location: int, slot: int):
         if slot < 60:
             return "N"
         elif slot < 90:
-             return "S"
+            return "S"
         elif slot < 98:
             return "I"
         else:
@@ -73,6 +78,7 @@ def getTargetLetter(location: int, slot: int):
         else:
             return "!"
 
+
 def getIVs(iv1: int, iv2: int):
     hp = iv1 & 0x1f
     atk = (iv1 >> 5) & 0x1f
@@ -80,10 +86,12 @@ def getIVs(iv1: int, iv2: int):
     spa = (iv2 >> 5) & 0x1f
     spd = (iv2 >> 10) & 0x1f
     spe = iv2 & 0x1f
-    return [ hp, atk, defense, spa, spd, spe ]
+    return [hp, atk, defense, spa, spd, spe]
+
 
 def getShiny(tsv: int, pid: int):
     return (pid & 0xffff) ^ (pid >> 16) ^ tsv < 8
+
 
 if __name__ == "__main__":
     print("Monean Chamber  - 0 (Letters: A, ?)")
@@ -97,7 +105,7 @@ if __name__ == "__main__":
 
     seed = int(input("Enter initial seed: 0x"), 16)
 
-    location = int(input("Enter location number: "))    
+    location = int(input("Enter location number: "))
     while location < 0 or location > 6:
         print("Invalid input")
         location = int(input("Enter location number: "))
@@ -134,15 +142,15 @@ if __name__ == "__main__":
     tsv = tid ^ sid
     rng = PokeRNG(seed)
     rng.advance_frames(startFrame - 1)
-        
+
     for cnt in range(maxFrame):
         flag = True
-        go = PokeRNG(rng.next_uint()) # Blank
+        go = PokeRNG(rng.next_uint())  # Blank
 
         slot = go.next_ushort() % 100
         targetLetter = getTargetLetter(location, slot)
 
-        go.next_uint() # Blank
+        go.next_uint()  # Blank
 
         letter = ""
         pid = 0
@@ -167,11 +175,10 @@ if __name__ == "__main__":
 
         if shiny == 1 and not getShiny(tsv, pid):
             flag = False
-        
+
         if flag:
             print("Frame: " + str(cnt + startFrame))
             print("Letter: " + targetLetter)
             print("PID: " + hex(pid) + "\t Nature: " + natures[pid % 25])
             print("IVs: " + str(ivs))
             print("")
-        

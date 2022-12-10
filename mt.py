@@ -34,6 +34,7 @@ class MersenneTwister:
             self.state[i] = next ^ self.state[(i + 397) % 624]
         self.index -= 624
 
+
 if __name__ == "__main__":
     rng = MersenneTwister(0)
     for i in range(10):

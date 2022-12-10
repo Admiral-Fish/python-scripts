@@ -1,7 +1,9 @@
 from typing import Union
 
+
 def uint(num: int):
     return num & 0xffffffff
+
 
 class TinyMT:
     def __init__(self, seed: Union[int, list[int]]):
@@ -12,7 +14,7 @@ class TinyMT:
             self.state = seed
         else:
             raise ValueError("Argument must be a 32bit number or a list with 4 32bit numbers")
-    
+
     def init(self):
         for i in range(1, 8):
             y = 0x6c078965 * (self.state[(i-1) & 3] ^ (self.state[(i-1) & 3]) >> 30) + i
@@ -55,6 +57,7 @@ class TinyMT:
             t0 ^= 0x3793fdff
 
         return t0
+
 
 if __name__ == "__main__":
     rng = TinyMT(0x0)

@@ -1,6 +1,7 @@
 from lcrng import XDRNGR
 
-def get_target(rng: XDRNGR, index: int):    
+
+def get_target(rng: XDRNGR, index: int):
     '''    
     mask = 1 << (rng.next_ushort() >> 14)
     while (mask & 14) != 14:
@@ -18,26 +19,27 @@ def get_target(rng: XDRNGR, index: int):
 
     # Proceed to generate jirachi
     '''
-    
-    if index == 0: # 6 advances total
+
+    if index == 0:  # 6 advances total
         rng.advance_frames(1)
         if rng.next_ushort() <= 0x4000:
             rng.advance_frames(4)
             return True
-    elif index == 1: # 7 advances total
+    elif index == 1:  # 7 advances total
         rng.advance_frames(1)
         if rng.next_ushort() <= 0x547a:
             if rng.next_ushort() > 0x4000:
                 rng.advance_frames(4)
                 return True
-    elif index == 2: # 8 advances total
+    elif index == 2:  # 8 advances total
         rng.advance_frames(2)
         if rng.next_ushort() > 0x547a:
             if rng.next_ushort() > 0x4000:
                 rng.advance_frames(4)
                 return True
-    
+
     return False
+
 
 def check_seed(seed: int):
     # Jirachi floating into the screen has 3 different patterns to follow
@@ -70,6 +72,7 @@ def check_seed(seed: int):
                         return True
 
     return False
+
 
 if __name__ == "__main__":
     seed = int(input("Seed: 0x"), 16)

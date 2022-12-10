@@ -15,8 +15,8 @@ class Xoroshiro:
         self.seed[1] = self.rotl(s1, 37)
 
         return result
-        
-    def next_int(self, thresh, mask = None):
+
+    def next_int(self, thresh, mask=None):
         if mask is None:
             return self.next() & thresh
 
@@ -24,6 +24,7 @@ class Xoroshiro:
         while result >= thresh:
             result = self._next() & mask
         return result
+
 
 class XoroshiroBDSP:
     def __init__(self, seed: int):
@@ -52,6 +53,7 @@ class XoroshiroBDSP:
             return (result >> 32) % max
         else:
             return (result >> 32)
+
 
 if __name__ == "__main__":
     rng = Xoroshiro(0)

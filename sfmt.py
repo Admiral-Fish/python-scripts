@@ -1,6 +1,7 @@
 def uint(num: int):
     return num & 0xFFFFFFFF
 
+
 class SFMT:
     def __init__(self, seed: int):
         self.state = [0]*624
@@ -15,7 +16,7 @@ class SFMT:
         # Period certification
         inner = 0
 
-        parity = [ 0x1, 0x0, 0x0, 0x13c9e684 ]
+        parity = (0x1, 0x0, 0x0, 0x13c9e684)
         for i in range(4):
             inner ^= self.state[i] & parity[i]
 
@@ -85,6 +86,7 @@ class SFMT:
         self.index += 1
 
         return result
+
 
 if __name__ == "__main__":
     rng = SFMT(0)

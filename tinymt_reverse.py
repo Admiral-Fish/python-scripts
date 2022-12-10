@@ -1,6 +1,7 @@
 def uint(num: int):
     return num & 0xFFFFFFFF
 
+
 def unBitshiftRightXor(value: int, shift: int):
     i = 0
     result = 0
@@ -13,6 +14,7 @@ def unBitshiftRightXor(value: int, shift: int):
         i += 1
 
     return result
+
 
 def unBitshiftLeftXor(value: int, shift: int):
     i = 0
@@ -27,6 +29,7 @@ def unBitshiftLeftXor(value: int, shift: int):
 
     return result
 
+
 def reverse(s: list[int]):
     y = s[3]
     state1 = s[0]
@@ -37,7 +40,7 @@ def reverse(s: list[int]):
 
     state2 = s[1]
 
-    x = s[2] ^ uint(y << 10)    
+    x = s[2] ^ uint(y << 10)
 
     state3 = unBitshiftRightXor(y ^ x, 1)
     x = unBitshiftLeftXor(x, 1)
@@ -45,6 +48,7 @@ def reverse(s: list[int]):
     state0 = x ^ state1 ^ state2
 
     return [state0, state1, state2, state3]
+
 
 def advance(s: list[int]):
     y = s[3]
@@ -62,6 +66,7 @@ def advance(s: list[int]):
 
     return s
 
+
 def reverseInit(s: list[int]):
     for _ in range(8):
         if _ == 7:
@@ -74,7 +79,7 @@ def reverseInit(s: list[int]):
             s[0] ^= 0x80000000
 
         printState(s)
-    
+
     # Assume period_certification did nothing
 
     for i in range(7, 0, -1):
@@ -82,6 +87,7 @@ def reverseInit(s: list[int]):
         s[i & 3] ^= y & 0xFFFFFFFF
 
     return s
+
 
 def reverseTinyMTTIDSID(s: list[int]):
     for _ in range(2):
@@ -97,8 +103,10 @@ def reverseTinyMTTIDSID(s: list[int]):
     s = reverseInit(s.copy())
     return s
 
+
 def printState(s: list[int]):
     print([hex(state) for state in s])
+
 
 if __name__ == "__main__":
     s = [0xf960f823, 0x134cd665, 0xd81408bb, 0xd04eac92]
